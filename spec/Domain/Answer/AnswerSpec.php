@@ -57,7 +57,7 @@ class AnswerSpec extends ObjectBehavior
 
     function it_has_a_correct_answer()
     {
-        $this->correctAnswer()->shouldBe($this->correctAnswer);
+        $this->isItCorrectAnswer()->shouldBe($this->correctAnswer);
     }
 
     function it_has_a_body()

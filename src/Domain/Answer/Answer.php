@@ -14,6 +14,7 @@ use App\Domain\Question\Question;
 use App\Domain\UserManagement\User;
 use App\Domain\Vote\Vote;
 use JsonSerializable;
+use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Boolean;
 
 /**
@@ -64,7 +65,7 @@ class Answer implements JsonSerializable
         return $this->question;
     }
 
-    public function correctAnswer() :bool
+    public function isItCorrectAnswer() :bool
     {
         return $this->correctAnswer;
     }
@@ -110,7 +111,7 @@ class Answer implements JsonSerializable
         return$this->negativeVotes;
     }
 
-    public function addVote($vote) : int
+    public function addVote($vote) :int
     {
         if ($vote->isPositive()==true)
         {
@@ -135,7 +136,7 @@ class Answer implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize() :Array
     {
         return [
             'answerId' => $this->answerId(),

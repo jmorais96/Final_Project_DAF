@@ -29,14 +29,14 @@ class Vote implements JsonSerializable
         $this->value=$value;
     }
 
-    public static function positive()
+    public static function positive() :Vote
     {
-        return new vote ((bool) self::POSITIVE);
+        return new Vote ((bool) self::POSITIVE);
     }
 
-    public static function negative()
+    public static function negative() :Vote
     {
-        return new vote ((bool) self::NEGATIVE);
+        return new Vote ((bool) self::NEGATIVE);
     }
 
     /**
@@ -48,15 +48,17 @@ class Vote implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        // TODO: Implement jsonSerialize() method.
+        return [
+            'vote' => $this->value
+        ];
     }
 
-    public function isPositive()
+    public function isPositive() :bool
     {
         return $this->value;
     }
 
-    public function isNegative()
+    public function isNegative() :bool
     {
         return $this->value;
     }

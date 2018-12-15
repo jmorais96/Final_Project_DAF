@@ -11,6 +11,7 @@ namespace App\Domain\Tag;
 
 use App\Domain\Tag\Tag\TagId;
 use JsonSerializable;
+use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * Tag
@@ -35,12 +36,12 @@ class Tag implements JsonSerializable
     }
 
 
-    public function description()
+    public function description() :string
     {
         return $this->description;
     }
 
-    public function tagId()
+    public function tagId() :tagId
     {
         return $this->tagId;
     }
@@ -52,7 +53,7 @@ class Tag implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize() :Array
     {
         return [
             'tagId' => $this->tagId,

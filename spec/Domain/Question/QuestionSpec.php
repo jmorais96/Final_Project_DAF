@@ -26,7 +26,7 @@ class QuestionSpec extends ObjectBehavior
 
     private $datePublished;
 
-    function let(User $user, \DateTimeImmutable $datePublished)
+    function let(User $user)
     {
 
         $this->user=$user;
@@ -34,9 +34,8 @@ class QuestionSpec extends ObjectBehavior
         $this->body= 'body';
         $this->answers=[];
         $this->tags=[];
-        $this->datePublished=$datePublished;
-
-        $this->beConstructedWith($this->user, $this->title, $this->body, $this->tags, $this->datePublished);
+        //$this->datePublished= new \DateTimeImmutable();
+        $this->beConstructedWith($this->user, $this->title, $this->body, $this->tags);
     }
 
 
@@ -78,21 +77,27 @@ class QuestionSpec extends ObjectBehavior
 
     function it_has_a_date_published()
     {
-        $this->datePublished()->shouldBe($this->datePublished);
+        $this->datePublished()->shouldBeAnInstanceOf(\DateTimeImmutable::class);
     }
 
     function it_can_add_an_answer(Answer $answer)
     {
-        $answers=$this->answers()->getWrappedObject();
-        $this->addAnswer($answer)->shouldHaveCount(count($answers)+1);
-        $this->addAnswer($answer)->shouldBeArray();
+        $answers=$this->answers()->getWrappedObject();//iyguyg
+        $newAnswers=$this->addAnswer($answer);//kygftyfkjyg
+        $newAnswers->shouldBeArray();
+        $newAnswers->shouldHaveCount(count($answers)+1);
+        $newAnswers[count($newAnswers->getWrappedObject())-1]->shouldBe($answer);
+        /*$this->addAnswer($answer)->shouldHaveCount(count($answers)+1);
+        $this->addAnswer($answer)->shouldBeAnInstanceOf(Answer::class);*/
     }
 
     function it_can_remove_an_answer(Answer $answer)
     {
         $this->addAnswer($answer);
         $answers=$this->answers()->getWrappedObject();
-        $this->removeAnswer($answer)->shouldNotBe(array_search($answer, $answers));
+        $this->removeAnswer($answer)->shouldNotBe($answers[array_search($answer, $answers)]);
+        $this->answers()->shouldBeArray();
+        $this->answers()->shouldHaveCount(count($answers)-1);
     }
 
     function it_can_add_a_tag(Tag $tag)
@@ -113,7 +118,7 @@ class QuestionSpec extends ObjectBehavior
             'title' => $this->title,
             'body' =>$this->body,
             'tag' => $this->tags,
-            'datePublished'=>$this->datePublished
+            'datePublished'=>$this->datePublished()
         ]);
 
     }
@@ -127,9 +132,29 @@ class QuestionSpec extends ObjectBehavior
         $this->title()->shouldBe($this->title);
     }
 
-    function it_has_a_correct_answer(Answer $answer)
+    function it_has_a_correct_answer(Question $question, \DateTimeImmutable $date, User $user)
     {
+        $question=$question->getWrappedObject();
+        $body='body';
+        $date=$date->getWrappedObject();
+        $user=$user->getWrappedObject();
+        $correstAnwser=true;
+        $answer=new Answer($question, $body , $date, $user, $correstAnwser);
+        $this->addAnswer($answer)->shouldBeArray();
+        $this->correctAnswer()->shouldBeAnInstanceOf(Answer::class);
+        $this->correctAnswer()->isItCorrectAnswer()->shouldBe(true);
+    }
 
+    function it_does_not_have_a_correct_answer(Question $question, \DateTimeImmutable $date, User $user)
+    {
+        $question=$question->getWrappedObject();
+        $body='body';
+        $date=$date->getWrappedObject();
+        $user=$user->getWrappedObject();
+        $correstAnwser=false;
+        $answer=new Answer($question, $body , $date, $user, $correstAnwser);
+        $this->addAnswer($answer)->shouldBeArray();
+        $this->correctAnswer()->shouldBe(false);
     }
 
 

@@ -15,6 +15,7 @@ use App\Domain\Tag\Tag;
 use App\Domain\UserManagement\User;
 use JsonSerializable;
 use phpDocumentor\Reflection\Types\Array_;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Question
@@ -27,48 +28,55 @@ class Question implements JsonSerializable
     private $user;
     private $title;
     private $body;
-    private $answers;
+    private $answers = [];
     private $tags;
     private $datePublished;
 
-    public function __construct(User $user, String $title, String $body, Array $tags, \DateTimeImmutable $datePublished, $answers = [])
+    /**
+     * Question constructor.
+     * @param User $user
+     * @param String $title
+     * @param String $body
+     * @param array $tags
+     * @throws \Exception
+     */
+    public function __construct(User $user, String $title, String $body, Array $tags = [])
     {
         $this->questionId = new QuestionId();
         $this->user = $user;
         $this->title=$title;
         $this->body=$body;
-        $this->answers=$answers;
         $this->tags=$tags;
-        $this->datePublished=$datePublished;
+        $this->datePublished=new \DateTimeImmutable();
         
     }
 
-    public function questionId()
+    public function questionId() :QuestionId
     {
         return $this->questionId;
     }
 
-    public function user()
+    public function user() :User
     {
         return $this->user;
     }
 
-    public function title()
+    public function title() :string
     {
         return $this->title;
     }
 
-    public function body()
+    public function body() :string
     {
         return $this->body;
     }
 
-    public function tags()
+    public function tags() :Array
     {
         return $this->tags;
     }
 
-    public function datePublished()
+    public function datePublished() :\DateTimeImmutable
     {
         return $this->datePublished;
     }
@@ -82,7 +90,7 @@ class Question implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize() :Array
     {
         return [
             'questionId' => $this->questionId(),
@@ -94,28 +102,28 @@ class Question implements JsonSerializable
         ];
     }
 
-    public function answers()
+    public function answers() : array
     {
         return $this->answers;
     }
 
-    public function addAnswer($answer)
+    public function addAnswer($answer) : array
     {
         array_push($this->answers, $answer);
         return $this->answers;
     }
 
-    public function removeAnswer($answer)
+    public function removeAnswer($answer) : array
     {
-        $key=array_search($this->answers, array($answer));
+        $key=array_search($answer, $this->answers);
         unset($this->answers[$key]);
         return $this->answers;
     }
 
-    public function addTags($tag)
+    public function addTags($tag) : array
     {
         array_push($this->tags, $tag);
-        return$this->tags;
+        return $this->tags;
     }
 
     public function update(String $title, String $body)
@@ -123,6 +131,17 @@ class Question implements JsonSerializable
         $this->title=$title;
         $this->body=$body;
 
+    }
+
+    public function correctAnswer()
+    {
+        foreach ($this->answers as $key => $value)
+        {
+            if ($value->isItCorrectAnswer()==true)
+                return $value;
+        }
+
+        return false;
     }
 
 

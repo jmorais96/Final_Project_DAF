@@ -11,15 +11,14 @@ use Prophecy\Argument;
 class VoteSpec extends ObjectBehavior
 {
 
+    private $vote;
     /**
      * @throws \Exception
      */
     function let()
     {
+        $this->vote=true;
         $this->beConstructedThrough('positive',[]);
-
-
-
     }
 
     function it_is_initializable()
@@ -36,6 +35,14 @@ class VoteSpec extends ObjectBehavior
     {
         $this->beConstructedThrough('negative',[]);
         $this->isNegative()->shouldBe(false);
+    }
+
+    function it_can_be_converted_to_json()
+    {
+        $this->shouldBeAnInstanceOf(\JsonSerializable::class);
+        $this->jsonSerialize()->shouldBe([
+            'vote' => $this->vote,
+        ]);
     }
 
 }
