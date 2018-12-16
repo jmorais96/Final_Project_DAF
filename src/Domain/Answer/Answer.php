@@ -39,17 +39,17 @@ class Answer implements JsonSerializable
      * Answer constructor.
      * @param Question $question
      * @param String $body
-     * @param \DateTimeImmutable $datePublished
      * @param User $user
      * @param bool $correctAnswer
+     * @throws \Exception
      */
-    public function __construct(Question $question, String $body, \DateTimeImmutable $datePublished, User $user, Bool $correctAnswer = false)
+    public function __construct(Question $question, String $body,  User $user, Bool $correctAnswer = false)
     {
         $this->answerId=new AnswerId();
         $this->question=$question;
         $this->correctAnswer=$correctAnswer;
         $this->body=$body;
-        $this->datePublished=$datePublished;
+        $this->datePublished= new \DateTimeImmutable();
         $this->user=$user;
         $this->positiveVotes=0;
         $this->negativeVotes=0;

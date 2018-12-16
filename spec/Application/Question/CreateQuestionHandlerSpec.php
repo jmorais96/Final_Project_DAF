@@ -13,6 +13,9 @@ use Prophecy\Argument;
 class CreateQuestionHandlerSpec extends ObjectBehavior
 {
 
+    /**
+     * @param QuestionRepository $repository
+     */
     function let(QuestionRepository $repository)
     {
         $repository->add(Argument::type(Question::class))->willReturnArgument(0);

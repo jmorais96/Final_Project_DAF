@@ -11,5 +11,7 @@ namespace App\Domain\Answer;
 
 interface AnswerRepository
 {
-    //public function add()
+    public function add(Answer $answer);
+
+    public function remove(Answer $answer): void;
 }

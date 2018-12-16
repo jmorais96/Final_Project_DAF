@@ -13,7 +13,7 @@ use App\Domain\UserManagement\User;
 use App\Domain\UserManagement\User\Email;
 use App\Domain\UserManagement\User\UserId;
 use App\Domain\UserManagement\UsersRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager as EntityManagerAlias;
 use Doctrine\ORM\EntityManagerInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
@@ -33,7 +33,7 @@ final class DoctrineUsersRepository implements UsersRepository
     /**
      * Creates a DoctrineUsersRepository
      *
-     * @param EntityManagerInterface|EntityManager $entityManager
+     * @param EntityManagerInterface|EntityManagerAlias $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {

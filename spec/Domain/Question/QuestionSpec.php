@@ -139,7 +139,7 @@ class QuestionSpec extends ObjectBehavior
         $date=$date->getWrappedObject();
         $user=$user->getWrappedObject();
         $correstAnwser=true;
-        $answer=new Answer($question, $body , $date, $user, $correstAnwser);
+        $answer=new Answer($question, $body , $user, $correstAnwser);
         $this->addAnswer($answer)->shouldBeArray();
         $this->correctAnswer()->shouldBeAnInstanceOf(Answer::class);
         $this->correctAnswer()->isItCorrectAnswer()->shouldBe(true);
@@ -152,7 +152,7 @@ class QuestionSpec extends ObjectBehavior
         $date=$date->getWrappedObject();
         $user=$user->getWrappedObject();
         $correstAnwser=false;
-        $answer=new Answer($question, $body , $date, $user, $correstAnwser);
+        $answer=new Answer($question, $body , $user, $correstAnwser);
         $this->addAnswer($answer)->shouldBeArray();
         $this->correctAnswer()->shouldBe(false);
     }

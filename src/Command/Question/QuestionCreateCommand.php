@@ -9,7 +9,26 @@
 namespace App\Command\Question;
 
 
-class QuestionCreateCommand
+use League\Tactician\CommandBus;
+use Symfony\Component\Console\Command\Command;
+
+class QuestionCreateCommand extends Command
 {
+    public function __construct(CommandBus $commandBus)
+    {
+        parent::__construct();
+        $this->commandBus = $commandBus;
+    }
+
+    public function configure()
+    {
+        $this
+            ->setName('question:create')
+            ->setHelp('Creates a new question')
+            ->addArgument('userId', InputArgument::REQUIRED, 'User full name')
+            ->addArgument('email', InputArgument::REQUIRED, 'User e-mail address')
+        ;
+    }
+
 
 }

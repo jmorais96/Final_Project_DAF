@@ -19,25 +19,22 @@ class AnswerSpec extends ObjectBehavior
 
     private $body;
 
-    private $datePublished;
-
     private $user;
 
     private $positiveVotes;
 
     private $negativeVotes;
 
-    function let(Question $question, \DateTimeImmutable $datePublished, User $user)
+    function let(Question $question, User $user)
     {
 
         $this->question=$question;
         $this->correctAnswer=false;
         $this->body= 'body';
-        $this->datePublished=$datePublished;
         $this->user=$user;
         $this->positiveVotes=0;
         $this->negativeVotes=0;
-        $this->beConstructedWith($this->question, $this->body, $this->datePublished, $this->user);
+        $this->beConstructedWith($this->question, $this->body, $this->user);
     }
 
     function it_is_initializable()
@@ -67,7 +64,7 @@ class AnswerSpec extends ObjectBehavior
 
     function it_has_a_date_published()
     {
-        $this->datePublished()->shouldBe($this->datePublished);
+        $this->datePublished()->shouldBeAnInstanceOf(\DateTimeImmutable::class);
     }
 
     function it_has_a_user()
@@ -112,7 +109,7 @@ class AnswerSpec extends ObjectBehavior
             'question' => $this->question,
             'correctAnswer' => $this->correctAnswer,
             'body' => $this->body,
-            'datePublished' =>$this->datePublished,
+            'datePublished' =>$this->datePublished(),
             'user' => $this->user,
             'postiveVotes' => $this->positiveVotes,
             'negativeVotes' =>$this->negativeVotes
