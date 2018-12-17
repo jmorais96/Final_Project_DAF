@@ -13,6 +13,8 @@ use App\Domain\Answer\Answer;
 use App\Domain\Question\Question\QuestionId;
 use App\Domain\Tag\Tag;
 use App\Domain\UserManagement\User;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 use JsonSerializable;
 use phpDocumentor\Reflection\Types\Array_;
 use Ramsey\Uuid\Uuid;
@@ -21,15 +23,50 @@ use Ramsey\Uuid\Uuid;
  * Question
  *
  * @package App\Domain\Question
+ *
+ * @ORM\Entity()
+ * @ORM\Table(name="questions")
+ *
  */
 class Question implements JsonSerializable
 {
+
+
+    /**
+     * @var QuestionId
+     *
+     * @ORM\Id()
+     * @ORM\Column(type="QuestionId", name="id")
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
     private $questionId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\UserManagement\User")
+     */
     private $user;
+
+    /**
+     * @ORM\Column(type="String")
+     */
     private $title;
+
+    /**
+     * @ORM\Column(type="String")
+     */
     private $body;
+
     private $answers = [];
+
+    /**
+     * @ORM\Column(type="Array")
+     */
     private $tags;
+
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="\DateTimeImmutable")
+     */
     private $datePublished;
 
     /**
@@ -40,7 +77,7 @@ class Question implements JsonSerializable
      * @param array $tags
      * @throws \Exception
      */
-    public function __construct(User $user, String $title, String $body, Array $tags = [])
+    public function __construct(User $user, String $title, String $body, array $tags = [])
     {
         $this->questionId = new QuestionId();
         $this->user = $user;
@@ -71,7 +108,7 @@ class Question implements JsonSerializable
         return $this->body;
     }
 
-    public function tags() :Array
+    public function tags() : array
     {
         return $this->tags;
     }

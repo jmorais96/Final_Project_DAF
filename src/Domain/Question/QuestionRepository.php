@@ -9,6 +9,8 @@
 namespace App\Domain\Question;
 
 
+use App\Domain\Question\Question\QuestionId;
+
 interface QuestionRepository
 {
     /**
@@ -21,4 +23,6 @@ interface QuestionRepository
      * @param Question $question
      */
     public function remove(Question $question): void;
+
+    public function WithQuestionId(QuestionId $questionId) :Question;
 }

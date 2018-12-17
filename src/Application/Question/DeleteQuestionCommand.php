@@ -9,6 +9,8 @@
 
 namespace App\Application\Question;
 
+use App\Domain\Question\Question;
+
 /**
  * DeleteQuestionCommand
  *
@@ -16,8 +18,18 @@ namespace App\Application\Question;
  */
 final class DeleteQuestionCommand
 {
-    public function __construct($argument1)
+    /**
+     * @var Question\QuestionId
+     */
+    private $questionId;
+
+    public function __construct(Question\QuestionId $questionId)
     {
-        // TODO: write logic here
+        $this->questionId = $questionId;
+    }
+
+    public function questionId()
+    {
+        return $this->questionId;
     }
 }

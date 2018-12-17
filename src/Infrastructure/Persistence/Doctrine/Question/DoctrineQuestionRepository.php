@@ -10,8 +10,9 @@ namespace App\Infrastructure\Persistence\Doctrine\Question;
 
 
 use App\Domain\Question\Question;
+use App\Domain\Question\Question\QuestionId;
 use App\Domain\Question\QuestionRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager as EntityManagerAlias;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DoctrineQuestionRepository implements QuestionRepository
@@ -43,6 +44,17 @@ class DoctrineQuestionRepository implements QuestionRepository
      */
     public function remove(Question $question): void
     {
-        // TODO: Implement remove() method.
+        $this->entityManager->remove($question);
+        $this->entityManager->flush();
+    }
+
+    public function WithQuestionId(QuestionId $questionId): Question
+    {
+        $question = $this->entityManager->find(Question::class, $questionId);
+        if (! $question instanceof QuestionId) {
+            throw new \RuntimeException("Question not found.");
+        }
+
+        return $question;
     }
 }

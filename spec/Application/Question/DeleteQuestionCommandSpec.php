@@ -21,4 +21,9 @@ class DeleteQuestionCommandSpec extends ObjectBehavior
     {
         $this->shouldHaveType(DeleteQuestionCommand::class);
     }
+
+    function it_has_a_questionId()
+    {
+        $this->questionId()->shouldBe($this->questionId);
+    }
 }

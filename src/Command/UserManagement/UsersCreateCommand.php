@@ -54,6 +54,7 @@ final class UsersCreateCommand extends Command
     /**
      * UsersCreateCommand constructor.
      * @param CommandBus $commandBus
+     *
      */
     public function __construct(CommandBus $commandBus)
     {
