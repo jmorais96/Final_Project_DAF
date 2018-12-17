@@ -37,7 +37,7 @@ class UserCreateController extends AbstractController
         $email = new User\Email(filter_var($_POST['email'], FILTER_SANITIZE_STRING));
         $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
 
-        $command = new CreateUserCommand( $name, $email);
+        $command = new CreateUserCommand($name, $email);
 
         $this->withCurrentUser($this->handler->handle($command));
 

@@ -25,4 +25,6 @@ interface QuestionRepository
     public function remove(Question $question): void;
 
     public function WithQuestionId(QuestionId $questionId) :Question;
+
+    public function listQuestions();
 }

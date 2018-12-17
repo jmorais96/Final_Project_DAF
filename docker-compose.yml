@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/var/www/app
     ports:
-      - 8888:80
+      - 8889:80
     environment:
       - USE_XDEBUG=yes
       - WEBROOT=public
@@ -14,9 +14,9 @@ services:
   database:
     image: mysql:5.7
     ports:
-      - 3306:3306
+      - 3309:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=System32
-      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=just-a-secret
+      - MYSQL_USER=db_user
       - MYSQL_PASSWORD=secret
       - MYSQL_DATABASE=project

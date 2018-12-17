@@ -13,6 +13,7 @@ use App\Domain\Answer\Answer\AnswerId;
 use App\Domain\Question\Question;
 use App\Domain\UserManagement\User;
 use App\Domain\Vote\Vote;
+use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -21,18 +22,55 @@ use phpDocumentor\Reflection\Types\Boolean;
  * Answer
  *
  * @package App\Domain\Answer
+ *
+ * @ORM\Entity()
+ * @ORM\Table(name="answers")
  */
 class Answer implements JsonSerializable
 {
+
+    /**
+     * @var AnswerId
+     *
+     * @ORM\Id()
+     * @ORM\Column(type="AnswerId", name="id")
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
     private $answerId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\Question\Question")
+     */
     private $question;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $correctAnswer;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     private $body;
-    private $vote;
+
+    /**
+     * @ORM\Column(type="date_immutable")
+     */
     private $datePublished;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\UserManagement\User")
+     */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $positiveVotes;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $negativeVotes;
 
     /**

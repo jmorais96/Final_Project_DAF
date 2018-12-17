@@ -11,13 +11,14 @@ namespace App\Controller\Question;
 
 use App\Application\Question\CreateQuestionCommand;
 use App\Application\Question\CreateQuestionHandler;
+use App\Controller\UserManagement\OAuth2\AuthenticatedControllerInterface;
 use App\Controller\UserManagement\OAuth2\AuthenticatedControllerMethods;
 use App\Domain\UserManagement\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CreateQuestionController extends AbstractController
+class CreateQuestionController extends AbstractController implements AuthenticatedControllerInterface
 {
 
     use AuthenticatedControllerMethods;
@@ -41,12 +42,12 @@ class CreateQuestionController extends AbstractController
             $tags = explode(",",filter_var($_POST['tags'], FILTER_SANITIZE_STRING));
         }
 
-        $mail = new User\Email('john.doe@example.com');
-        $user = new User("test", $mail);
+       /* $mail = new User\Email('john.doe@example.com');
+        $user = new User("test", $mail);*/
 
-        $command = new CreateQuestionCommand($user, $title, $body, $tags );
+        $command = new CreateQuestionCommand($this->currentUser(), $title, $body, $tags );
         $this->handler->handle($command);
 
-        return new Response(json_encode("Question Created"), 200, ['content-type' => 'application/json']);
+        return new Response(json_encode($this->handler->handle($command) ), 200, ['content-type' => 'application/json']);
     }
 }

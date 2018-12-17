@@ -47,25 +47,27 @@ class Question implements JsonSerializable
     private $user;
 
     /**
-     * @ORM\Column(type="String")
+     * @ORM\Column(type="string")
      */
     private $title;
 
     /**
-     * @ORM\Column(type="String")
+     * @ORM\Column(type="string")
      */
     private $body;
 
+    /**
+     * @ORM\Column(type="array")
+     */
     private $answers = [];
 
     /**
-     * @ORM\Column(type="Array")
+     * @ORM\Column(type="array")
      */
     private $tags;
 
     /**
-     * @var \DateTimeImmutable
-     * @ORM\Column(type="\DateTimeImmutable")
+     * @ORM\Column(type="date_immutable")
      */
     private $datePublished;
 
@@ -85,7 +87,7 @@ class Question implements JsonSerializable
         $this->body=$body;
         $this->tags=$tags;
         $this->datePublished=new \DateTimeImmutable();
-        
+
     }
 
     public function questionId() :QuestionId

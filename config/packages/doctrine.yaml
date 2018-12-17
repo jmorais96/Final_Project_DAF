@@ -20,6 +20,9 @@ doctrine:
             UserId: App\Infrastructure\Persistence\Doctrine\UserManagement\User\DoctrineUserId
             Email: App\Infrastructure\Persistence\Doctrine\UserManagement\User\DoctrineEmail
             Password: App\Infrastructure\Persistence\Doctrine\UserManagement\User\DoctrinePassword
+            QuestionId: App\Infrastructure\Persistence\Doctrine\Question\Question\DoctrineQuestionId
+            AnswerId: App\Infrastructure\Persistence\Doctrine\Answer\Answer\DoctrineAnswerId
+
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

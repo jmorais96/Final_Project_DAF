@@ -62,4 +62,6 @@ interface UsersRepository extends UserRepositoryInterface
      * @throws \RuntimeException if user is not found
      */
     public function withEmail(Email $email): User;
+
+
 }
