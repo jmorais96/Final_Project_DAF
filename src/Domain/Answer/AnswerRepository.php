@@ -9,9 +9,15 @@
 namespace App\Domain\Answer;
 
 
+use App\Domain\Answer\Answer\AnswerId;
+
 interface AnswerRepository
 {
     public function add(Answer $answer);
 
     public function remove(Answer $answer): void;
+
+    public function withAnswerId(AnswerId $answerId);
+
+    public function update(Answer $answer);
 }

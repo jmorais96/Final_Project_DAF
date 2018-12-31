@@ -26,7 +26,7 @@ interface QuestionRepository
 
     public function withQuestionId(QuestionId $questionId) :Question;
 
-    public function listQuestions() ;
+    public function listQuestions();
 
     public function updateQuestion(Question $question) : Question;
 }

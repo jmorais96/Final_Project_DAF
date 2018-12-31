@@ -63,4 +63,10 @@ class DoctrineQuestionRepository implements QuestionRepository
         $query = $this->entityManager->createQuery('SELECT u FROM  App/Domain/Question/Question u');
         return $query->getResult();
     }
+
+    public function updateQuestion(Question $question): Question
+    {
+        $this->entityManager->flush($question);
+        return $question;
+    }
 }
