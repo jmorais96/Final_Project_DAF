@@ -9,6 +9,8 @@
 
 namespace App\Application\Question;
 
+use App\Domain\Question\QuestionRepository;
+
 /**
  * DeleteQuestionHandler
  *
@@ -16,4 +18,22 @@ namespace App\Application\Question;
  */
 final class DeleteQuestionHandler
 {
+
+    private $questionRepository;
+    /**
+     * @param $questionRepository
+     */
+    public function __construct(QuestionRepository $questionRepository)
+    {
+
+        $this->questionRepository = $questionRepository;
+
+    }
+    public function handler(DeleteQuestionCommand $command)
+    {
+
+        $question = $this->questionRepository->withQuestionId($command->questionId());
+        return $this->questionRepository->remove($question);
+
+    }
 }

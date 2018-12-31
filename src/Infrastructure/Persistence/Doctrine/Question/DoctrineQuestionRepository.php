@@ -48,7 +48,7 @@ class DoctrineQuestionRepository implements QuestionRepository
         $this->entityManager->flush();
     }
 
-    public function WithQuestionId(QuestionId $questionId): Question
+    public function withQuestionId(QuestionId $questionId): Question
     {
         $question = $this->entityManager->find(Question::class, $questionId);
         if (! $question instanceof QuestionId) {
