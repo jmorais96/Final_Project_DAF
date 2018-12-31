@@ -23,7 +23,7 @@ class UpdateAnswerHandler
     public function handler(UpdateAnswerCommand $command)
     {
         $answer= $this->answerRepository->withAnswerId($command->answerId());
-        $answer->update($command->body());
+        $answer->updateBody($command->body());
         $this->answerRepository->update($answer);
     }
 }

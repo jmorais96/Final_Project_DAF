@@ -13,6 +13,7 @@ use App\Domain\Answer\Answer\AnswerId;
 
 class UpdateAnswerCommand
 {
+    private $answerId;
     private $body;
 
 

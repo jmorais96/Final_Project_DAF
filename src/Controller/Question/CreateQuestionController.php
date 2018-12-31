@@ -38,9 +38,10 @@ class CreateQuestionController extends AbstractController implements Authenticat
     {
         $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
         $body = filter_var($_POST['body'], FILTER_SANITIZE_STRING);
-        if (isset($_POST['tags'])){
-            $tags = explode(",",filter_var($_POST['tags'], FILTER_SANITIZE_STRING));
-        }
+        $tags = explode(",",filter_var($_POST['tags'], FILTER_SANITIZE_STRING));
+
+        if(!isset($tags[0]))
+            $tags=array($tags);
 
         $command = new CreateQuestionCommand($this->currentUser(), $title, $body, $tags );
         $this->handler->handle($command);
