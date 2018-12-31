@@ -2,13 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: jose
- * Date: 17-12-2018
- * Time: 0:23
+ * Date: 31-12-2018
+ * Time: 1:58
  */
 
-namespace App\Controller\Question;
+namespace App\Controller\Answer;
 
-
+use App\Application\Answer\CreateAnswerCommand;
+use App\Application\Answer\CreateAnswerHandler;
 use App\Application\Question\CreateQuestionCommand;
 use App\Application\Question\CreateQuestionHandler;
 use App\Controller\UserManagement\OAuth2\AuthenticatedControllerInterface;
@@ -18,31 +19,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CreateQuestionController extends AbstractController implements AuthenticatedControllerInterface
+class CreateAnswerController extends AbstractController implements AuthenticatedControllerInterface
 {
-
     use AuthenticatedControllerMethods;
 
     private $handler;
 
-    public function __construct(CreateQuestionHandler $handler)
+    public function __construct(CreateAnswerHandler $handler)
     {
         $this->handler = $handler;
     }
 
     /**
-     * @Route("/question/add")
+     * @Route("/answer/add")
      * @throws \Exception
      */
     public function create()
     {
-        $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+        $questionId = filter_var($_POST['questionId'], FILTER_SANITIZE_STRING);
         $body = filter_var($_POST['body'], FILTER_SANITIZE_STRING);
-        if (isset($_POST['tags'])){
-            $tags = explode(",",filter_var($_POST['tags'], FILTER_SANITIZE_STRING));
-        }
 
-        $command = new CreateQuestionCommand($this->currentUser(), $title, $body, $tags );
+
+        $command = new CreateAnswerCommand($this->currentUser(), $body, $questionId );
         $this->handler->handle($command);
 
         return new Response(json_encode($this->handler->handle($command) ), 200, ['content-type' => 'application/json']);
